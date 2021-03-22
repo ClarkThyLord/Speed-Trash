@@ -1,16 +1,8 @@
 extends MeshInstance
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
+	translation.z += 10 * delta
+	if translation.z >= 0.715:
+		translation.z = -10.795
+		translation.x = rand_range(-5, 5)
