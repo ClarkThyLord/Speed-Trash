@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/obstacles/obstacle.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/garbage_truck/garbage_truck.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/map/road.png" type="Texture" id=3]
+[ext_resource path="res://src/map/map.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "idle"
@@ -36,6 +37,7 @@ tracks/0/keys = {
 }
 
 [node name="Map" type="Spatial"]
+script = ExtResource( 4 )
 
 [node name="Road" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, -2.18557e-07, 1, 0, -5, -4.37114e-08, 0, -1, -18 )
