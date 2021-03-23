@@ -9,7 +9,7 @@ func _process(delta):
 
 
 func _physics_process(delta):
-	var choque = move_and_collide(Vector3(0,0,10 * delta))
+	var choque = move_and_collide(Vector3(0, 0, 30) * delta)
 	if (choque is KinematicCollision):
 		reset()
  
@@ -17,5 +17,5 @@ func _physics_process(delta):
 
 ## Public Methods
 func reset() -> void:
-	translation.z = -15
-	translation.x = rand_range(-5, 5)
+	translation.z = -25
+	translation.x = rand_range(-3, 3)
