@@ -10,7 +10,7 @@ albedo_color = Color( 1, 1, 0, 1 )
 [sub_resource type="CubeMesh" id=3]
 material = SubResource( 2 )
 
-[node name="Obstacle" type="KinematicBody" groups=[
+[node name="Goal" type="KinematicBody" groups=[
 "goals",
 ]]
 collision_layer = 2147483649
