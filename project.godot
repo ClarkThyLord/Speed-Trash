@@ -16,7 +16,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Speed-Trash"
-run/main_scene="res://src/map/map.tscn"
+run/main_scene="res://src/game/game.tscn"
 config/icon="res://icon.png"
 
 [autoload]

@@ -1,16 +1,12 @@
 extends Control
 
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
+
+## OnReady Variables
+onready var points := get_node("Points")
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+## Built-In Virtual Methods
+func _process(delta : float) -> void:
+	points.text = "POINTS: " + str(get_node("/root/Session").points)
