@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/garbage_truck/garbage_truck.gd" type="Script" id=1]
+
+[sub_resource type="CapsuleMesh" id=1]
+
+[sub_resource type="CapsuleShape" id=2]
+height = 0.43381
+
+[node name="GargabeTruck" type="KinematicBody"]
+collision_layer = 3
+collision_mask = 2147483649
+script = ExtResource( 1 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 1 )
+material/0 = null
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.99906, 0, -0.0433578, 0, 1, 0, 0.0433578, 0, 0.99906, 0, 0, 0 )
+shape = SubResource( 2 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 2, 1 )
+current = true
