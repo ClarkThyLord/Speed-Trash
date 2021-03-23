@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://src/obstacles/obstacle.gd" type="Script" id=1]
+[ext_resource path="res://src/goals/goal.gd" type="Script" id=1]
 
 [sub_resource type="BoxShape" id=1]
 
 [sub_resource type="CubeMesh" id=2]
 
 [node name="Obstacle" type="KinematicBody" groups=[
-"obstacles",
+"goals",
 ]]
 collision_layer = 2147483648
 script = ExtResource( 1 )
