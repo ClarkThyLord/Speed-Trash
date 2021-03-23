@@ -1,0 +1,26 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/map/map.tscn" type="PackedScene" id=1]
+
+[node name="Game" type="Node"]
+
+[node name="Map" parent="." instance=ExtResource( 1 )]
+
+[node name="HUD" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Points" type="Label" parent="HUD"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -115.866
+margin_top = 4.7027
+margin_right = -5.86597
+margin_bottom = 18.7027
+text = "POINTS: "
+__meta__ = {
+"_edit_use_anchors_": false
+}
