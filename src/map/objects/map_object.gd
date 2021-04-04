@@ -3,6 +3,8 @@ extends Area
 # Abstract class for all map objects
 
 
+
+## Exported Variables
 export var speed := 1.0
 
 export var pointage := 0.0
@@ -18,11 +20,14 @@ func _ready() -> void:
 
 
 ## Public Methods
-func _player_entered(player) -> void: pass
+func random() -> void: pass
+
+
+func player_entered(player) -> void: pass
 
 
 
 ## Private Methods
 func _on_body_entered(body) -> void:
 	if body is KinematicBody and body.is_in_group("players"):
-		_player_entered(body)
+		player_entered(body)

@@ -42,6 +42,7 @@ func _ready() -> void:
 func _process(delta : float):
 	if map_objects.get_child_count() < map_objects_max and _spawn_time >= map_objects_spawn:
 		var map_object = _map_objects[randi() % _map_objects.size()].instance()
+		map_object.random()
 		map_object.translation = _spawn_points[randi() % _spawn_points.size()]
 		map_objects.add_child(map_object)
 		
@@ -50,6 +51,7 @@ func _process(delta : float):
 	for map_object in map_objects.get_children():
 		map_object.translation += Vector3(0, 0, 30 * map_object.speed * delta)
 		if map_object.translation.z > 0:
+			map_object.random()
 			map_object.translation = _spawn_points[randi() % _spawn_points.size()]
 	
 	_spawn_time += delta 

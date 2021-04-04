@@ -51,4 +51,9 @@ func set_trash_type(value : int) -> void:
 			return
 	trash_type = value
 	
-	texture.modulate = color
+	if is_instance_valid(texture):
+		texture.modulate = color
+
+
+func random() -> void:
+	set_trash_type(randi() % TrashTypes.size())
