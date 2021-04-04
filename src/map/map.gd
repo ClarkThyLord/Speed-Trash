@@ -3,7 +3,7 @@ extends Spatial
 
 
 ## Exported Variables
-export(int, 0, 100) var map_objects_max := 5
+export(int, 0, 100) var map_objects_max := 10
 
 export(float, 0.0, 10.0) var map_objects_spawn := 1.5
 
@@ -27,7 +27,8 @@ var _spawn_points := [
 ]
 
 var _map_objects := [
-	preload("res://src/map/objects/trash/trash.tscn")
+	preload("res://src/map/objects/trash/trash.tscn"),
+	preload("res://src/map/objects/vehicle/vehicle.tscn"),
 ]
 
 

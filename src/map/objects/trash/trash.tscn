@@ -13,6 +13,6 @@ pointage = 1.0
 shape = SubResource( 1 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
-modulate = Color( 0, 0.215686, 1, 1 )
+modulate = Color( 0.082353, 0.082353, 0.082353, 1 )
 pixel_size = 0.13
 texture = ExtResource( 2 )
