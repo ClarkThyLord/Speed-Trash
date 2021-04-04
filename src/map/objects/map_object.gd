@@ -23,7 +23,8 @@ func _ready() -> void:
 func random() -> void: pass
 
 
-func player_entered(player) -> void: pass
+func player_entered(player) -> void:
+	get_node("/root/Session").points += pointage
 
 
 

@@ -36,16 +36,22 @@ func set_trash_type(value : int) -> void:
 	var color : Color
 	match trash_type:
 		TrashTypes.ORGANIC:
+			pointage = 1
 			color = Color(0.082353, 0.082353, 0.082353)
 		TrashTypes.PAPER:
+			pointage = 2
 			color = Color(0, 0.215686, 1)
 		TrashTypes.GLASS:
+			pointage = 3
 			color = Color.white
 		TrashTypes.METAL:
+			pointage = 3
 			color = Color(1, 0.92549, 0)
 		TrashTypes.PLASTIC:
+			pointage = 2
 			color = Color(1, 0.568627, 0)
 		TrashTypes.E_WASTE:
+			pointage = 4
 			color = Color.red
 		_:
 			return
@@ -57,3 +63,7 @@ func set_trash_type(value : int) -> void:
 
 func random() -> void:
 	set_trash_type(randi() % TrashTypes.size())
+
+
+func player_entered(player) -> void:
+	.player_entered(player)
