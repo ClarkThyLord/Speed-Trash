@@ -20,7 +20,3 @@ material/0 = null
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.99906, 0, -0.0433578, 0, 1, 0, 0.0433578, 0, 0.99906, 0, 0, 0 )
 shape = SubResource( 2 )
-
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0.05, 2, 1 )
-current = true
