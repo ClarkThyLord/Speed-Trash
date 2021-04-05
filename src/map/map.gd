@@ -3,6 +3,8 @@ extends Spatial
 
 
 ## Exported Variables
+export(float, 0.0, 100.0) var road_speed := 30
+
 export(int, 0, 100) var map_objects_max := 10
 
 export(float, 0.0, 10.0) var map_objects_spawn := 1.5
@@ -11,6 +13,8 @@ export(float, 0.0, 10.0) var map_objects_spawn := 1.5
 
 ## OnReady Variables
 onready var road_animation : AnimationPlayer = get_node("Road/AnimationPlayer")
+
+onready var gargabe_truck := get_node("GargabeTruck")
 
 onready var map_objects : Spatial = get_node("MapObjects")
 
@@ -49,8 +53,16 @@ func _process(delta : float):
 		
 		_spawn_time = 0.0
 	
+	var road_velocity := Vector3(0, 0, road_speed)
+	if gargabe_truck.is_breaking():
+		road_velocity -= road_velocity * gargabe_truck.deceleration
+	
+	if gargabe_truck.is_boosting():
+		road_velocity += road_velocity * gargabe_truck.acceleration
+	
 	for map_object in map_objects.get_children():
-		map_object.translation += Vector3(0, 0, 30 * map_object.speed * delta)
+		map_object.translation += road_velocity * map_object.speed * delta
+		
 		if map_object.translation.z > 0:
 			map_object.random()
 			map_object.translation = _spawn_points[randi() % _spawn_points.size()]

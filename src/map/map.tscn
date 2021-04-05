@@ -11,7 +11,7 @@ background_mode = 2
 background_sky = SubResource( 1 )
 fog_enabled = true
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
 tracks/0/interp = 1
@@ -25,7 +25,7 @@ tracks/0/keys = {
 "values": [ Rect2( 0, 0, 19, 8 ) ]
 }
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:region_rect")
@@ -55,14 +55,15 @@ region_rect = Rect2( 0, 0, 19, 8 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Road"]
 autoplay = "idle"
-anims/idle = SubResource( 5 )
-anims/moving = SubResource( 6 )
+anims/idle = SubResource( 3 )
+anims/moving = SubResource( 4 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 8 )
 current = true
 
 [node name="GargabeTruck" parent="." instance=ExtResource( 2 )]
+deceleration = 0.662
 
 [node name="MapObjects" type="Spatial" parent="."]
 
