@@ -5,7 +5,9 @@ extends "res://src/map/objects/map_object.gd"
 
 ## Enums
 enum CarTypes {
-	DEFAULT,
+	CAR,
+	RACE_CAR,
+	BUS,
 }
 
 
@@ -28,13 +30,23 @@ func _ready() -> void:
 
 ## Public Methods
 func set_car_type(value : int) -> void:
-	var color : Color
-	match car_type:
-#		CarTypes.:
-#			pass
+	var car_texture : Texture
+	match value:
+		CarTypes.CAR:
+			speed = 1.0
+			car_texture = preload("res://assets/map/objects/vehicle/car.png")
+		CarTypes.RACE_CAR:
+			speed = 0.65
+			car_texture = preload("res://assets/map/objects/vehicle/race_car.png")
+		CarTypes.BUS:
+			speed = 1.75
+			car_texture = preload("res://assets/map/objects/vehicle/bus.png")
 		_:
 			return
 	car_type = value
+	
+	if is_instance_valid(texture):
+		texture.texture = car_texture
 
 
 func random() -> void:
