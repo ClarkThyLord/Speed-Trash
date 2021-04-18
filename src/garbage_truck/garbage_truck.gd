@@ -30,6 +30,16 @@ var _boosting := false
 ## OnReady Variables
 onready var animation_player : AnimationPlayer = get_node("AnimationPlayer")
 
+onready var ray_front : RayCast = get_node("RayFront")
+
+onready var ray_right : RayCast = get_node("RayRight")
+
+onready var ray_right_most : RayCast = get_node("RayRightMost")
+
+onready var ray_left : RayCast = get_node("RayLeft")
+
+onready var ray_left_most : RayCast = get_node("RayLeftMost")
+
 
 
 ## Built-In Virtual Methods

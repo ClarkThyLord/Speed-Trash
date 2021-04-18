@@ -19,7 +19,8 @@ tracks/0/keys = {
 "values": [ true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="BoxShape" id=3]
+extents = Vector3( 1, 1, 0.5 )
 
 [node name="GargabeTruck" type="Area" groups=[
 "players",
@@ -32,9 +33,33 @@ anims/hit = SubResource( 2 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.99906, 0, -0.0433578, 0, 1, 0, 0.0433578, 0, 0.99906, 0, 0, 0 )
-shape = SubResource( 1 )
+shape = SubResource( 3 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 pixel_size = 0.13
 texture = ExtResource( 2 )
+
+[node name="RayFront" type="RayCast" parent="."]
+cast_to = Vector3( 0, 0, 5 )
+collide_with_areas = true
+
+[node name="RayRight" type="RayCast" parent="."]
+transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 0, 0, 0 )
+cast_to = Vector3( 0, 0, 5 )
+collide_with_areas = true
+
+[node name="RayRightMost" type="RayCast" parent="."]
+transform = Transform( 0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 0, 0, 0 )
+cast_to = Vector3( 0, 0, 5 )
+collide_with_areas = true
+
+[node name="RayLeft" type="RayCast" parent="."]
+transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0, 0, 0 )
+cast_to = Vector3( 0, 0, 5 )
+collide_with_areas = true
+
+[node name="RayLeftMost" type="RayCast" parent="."]
+transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 0, 0, 0 )
+cast_to = Vector3( 0, 0, 5 )
+collide_with_areas = true
 [connection signal="area_entered" from="." to="." method="_on_GargabeTruck_area_entered"]
