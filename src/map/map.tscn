@@ -78,12 +78,17 @@ autoplay = "idle"
 anims/idle = SubResource( 3 )
 anims/moving = SubResource( 4 )
 
+[node name="City" type="Sprite3D" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 27.272, -64 )
+pixel_size = 1.75
+texture = ExtResource( 5 )
+
 [node name="Ground" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, -3.93403e-07, 1, 0, -9, -4.37114e-08, 0, -3, -35 )
 pixel_size = 1.25
 texture = ExtResource( 1 )
 region_enabled = true
-region_rect = Rect2( 0, -2.23365, 164, 12 )
+region_rect = Rect2( 0, -2.234, 258, 12 )
 
 [node name="Road" type="Sprite3D" parent="."]
 transform = Transform( 1, 0, 0, 0, -3.93403e-07, 1, 0, -9, -4.37114e-08, 0, -1, -34 )
@@ -102,10 +107,5 @@ far = 200.0
 deceleration = 0.662
 
 [node name="MapObjects" type="Spatial" parent="."]
-
-[node name="Sprite3D" type="Sprite3D" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 28, -64 )
-pixel_size = 2.0
-texture = ExtResource( 5 )
 
 [editable path="GargabeTruck"]

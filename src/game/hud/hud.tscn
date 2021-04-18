@@ -11,13 +11,13 @@ __meta__ = {
 }
 
 [node name="Points" type="Label" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -115.866
-margin_top = 4.7027
-margin_right = -5.86597
-margin_bottom = 18.7027
-text = "POINTS: "
+anchor_left = 0.445365
+anchor_top = 0.305541
+anchor_right = 0.553711
+anchor_bottom = 0.335541
+margin_bottom = -4.0
+text = "####"
+align = 1
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": true
 }

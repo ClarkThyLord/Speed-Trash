@@ -23,6 +23,11 @@ config/icon="res://icon.png"
 
 Session="*res://src/session.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+
 [input]
 
 ui_left={
