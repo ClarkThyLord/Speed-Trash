@@ -18,6 +18,8 @@ export(float, 0.0, 100.0) var momentum := 0.0
 
 export(float, 0.0, 100.0) var momentum_growth := 10.0
 
+export var ai := false
+
 
 
 ## Private Variables
@@ -44,23 +46,31 @@ onready var ray_left_most : RayCast = get_node("RayLeftMost")
 
 ## Built-In Virtual Methods
 func _process(delta):
-	var direction := Vector3.ZERO
-	if Input.is_action_pressed("ui_right") and translation.x < 6:
-		direction += Vector3.RIGHT
-	if Input.is_action_pressed("ui_left") and translation.x > -6:
-		direction += Vector3.LEFT
-	
-	_breaking = Input.is_action_pressed("action_break") and momentum >= break_usage
-	if _breaking:
-		direction -= direction * deceleration
-	
-	_boosting = Input.is_action_pressed("action_accelerate") and momentum >= boost_usage
-	if _boosting:
-		direction += direction * acceleration
-	
-	translate(direction * speed * delta)
-	
-	momentum += momentum_growth * delta
+	if ai:
+		print(
+				ray_front.is_colliding(),
+				ray_right.is_colliding(),
+				ray_right_most.is_colliding(),
+				ray_left.is_colliding(),
+				ray_left_most.is_colliding())
+	else:
+		var direction := Vector3.ZERO
+		if Input.is_action_pressed("ui_right") and translation.x < 6:
+			direction += Vector3.RIGHT
+		if Input.is_action_pressed("ui_left") and translation.x > -6:
+			direction += Vector3.LEFT
+		
+		_breaking = Input.is_action_pressed("action_break") and momentum >= break_usage
+		if _breaking:
+			direction -= direction * deceleration
+		
+		_boosting = Input.is_action_pressed("action_accelerate") and momentum >= boost_usage
+		if _boosting:
+			direction += direction * acceleration
+		
+		translate(direction * speed * delta)
+		
+		momentum += momentum_growth * delta
 
 
 
