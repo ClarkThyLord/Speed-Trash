@@ -15,7 +15,7 @@ export var pointage := 0.0
 func _ready() -> void:
 	add_to_group("objects")
 	
-	connect("body_entered", self, "_on_body_entered")
+	connect("area_entered", self, "_on_area_entered")
 
 
 
@@ -29,6 +29,6 @@ func player_entered(player) -> void:
 
 
 ## Private Methods
-func _on_body_entered(body) -> void:
-	if body is KinematicBody and body.is_in_group("players"):
+func _on_area_entered(body : Area) -> void:
+	if body is Area and body.is_in_group("players"):
 		player_entered(body)

@@ -1,4 +1,5 @@
-extends KinematicBody
+extends Area
+## Garbage Truck
 
 
 
@@ -26,6 +27,11 @@ var _boosting := false
 
 
 
+## OnReady Variables
+onready var animation_player : AnimationPlayer = get_node("AnimationPlayer")
+
+
+
 ## Built-In Virtual Methods
 func _process(delta):
 	var direction := Vector3.ZERO
@@ -42,7 +48,7 @@ func _process(delta):
 	if _boosting:
 		direction += direction * acceleration
 	
-	move_and_collide(direction * speed * delta)
+	translate(direction * speed * delta)
 	
 	momentum += momentum_growth * delta
 
@@ -55,3 +61,8 @@ func is_boosting() -> bool:
 
 func is_breaking() -> bool:
 	return _breaking
+
+
+func _on_GargabeTruck_area_entered(area : Area):
+	if area.is_in_group("obstacles") and not animation_player.is_playing():
+		animation_player.play("hit")

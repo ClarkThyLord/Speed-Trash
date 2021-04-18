@@ -5,7 +5,9 @@
 
 [sub_resource type="BoxShape" id=1]
 
-[node name="Trash" type="Area"]
+[node name="Trash" type="Area" groups=[
+"trashes",
+]]
 script = ExtResource( 1 )
 pointage = 1.0
 

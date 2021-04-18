@@ -5,7 +5,9 @@
 
 [sub_resource type="BoxShape" id=1]
 
-[node name="Vehicle" type="Area"]
+[node name="Vehicle" type="Area" groups=[
+"obstacles",
+]]
 script = ExtResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
