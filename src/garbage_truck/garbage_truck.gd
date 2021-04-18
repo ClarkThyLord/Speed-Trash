@@ -63,6 +63,8 @@ func is_breaking() -> bool:
 	return _breaking
 
 
+
+## Private Methods
 func _on_GargabeTruck_area_entered(area : Area):
 	if area.is_in_group("obstacles") and not animation_player.is_playing():
 		animation_player.play("hit")

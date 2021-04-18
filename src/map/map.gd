@@ -3,7 +3,7 @@ extends Spatial
 
 
 ## Exported Variables
-export(float, 0.0, 100.0) var road_speed := 30
+export(float, 0.0, 100.0) var road_speed := 30.0
 
 export(int, 0, 100) var map_objects_max := 10
 
@@ -12,7 +12,7 @@ export(float, 0.0, 10.0) var map_objects_spawn := 1.5
 
 
 ## OnReady Variables
-onready var road_animation : AnimationPlayer = get_node("Road/AnimationPlayer")
+onready var road_animation : AnimationPlayer = get_node("AnimationPlayer")
 
 onready var gargabe_truck := get_node("GargabeTruck")
 
