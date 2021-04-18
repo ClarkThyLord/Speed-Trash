@@ -59,7 +59,7 @@ anims/idle = SubResource( 3 )
 anims/moving = SubResource( 4 )
 
 [node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 8 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 5, 9 )
 current = true
 
 [node name="GargabeTruck" parent="." instance=ExtResource( 2 )]
