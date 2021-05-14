@@ -3,7 +3,7 @@
 [ext_resource path="res://src/garbage_truck/garbage_truck.gd" type="Script" id=1]
 [ext_resource path="res://assets/map/garbage_truck/gargabe_truck.png" type="Texture" id=2]
 
-[sub_resource type="Animation" id=2]
+[sub_resource type="Animation" id=1]
 resource_name = "hit"
 length = 0.6
 tracks/0/type = "value"
@@ -15,25 +15,25 @@ tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
+"update": 0,
 "values": [ true, false, true, false, true, false, true ]
 }
 
-[sub_resource type="BoxShape" id=3]
+[sub_resource type="BoxShape" id=2]
 extents = Vector3( 1, 1, 0.5 )
 
 [node name="GargabeTruck" type="Area" groups=[
 "players",
 ]]
-collision_mask = 2147483649
 script = ExtResource( 1 )
+ai = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/hit = SubResource( 2 )
+anims/hit = SubResource( 1 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 0.99906, 0, -0.0433578, 0, 1, 0, 0.0433578, 0, 0.99906, 0, 0, 0 )
-shape = SubResource( 3 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0 )
+shape = SubResource( 2 )
 
 [node name="Sprite3D" type="Sprite3D" parent="."]
 pixel_size = 0.13
@@ -41,30 +41,31 @@ texture = ExtResource( 2 )
 
 [node name="RayFront" type="RayCast" parent="."]
 enabled = true
-cast_to = Vector3( 0, 0, 5 )
+cast_to = Vector3( 0, 0, 10 )
 collide_with_areas = true
 
 [node name="RayRight" type="RayCast" parent="."]
 transform = Transform( 0.866025, 0, -0.5, 0, 1, 0, 0.5, 0, 0.866025, 0, 0, 0 )
 enabled = true
-cast_to = Vector3( 0, 0, 5 )
+cast_to = Vector3( 0, 0, 10 )
 collide_with_areas = true
 
 [node name="RayRightMost" type="RayCast" parent="."]
 transform = Transform( 0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 0, 0, 0 )
 enabled = true
-cast_to = Vector3( 0, 0, 5 )
+cast_to = Vector3( 0, 0, 10 )
 collide_with_areas = true
 
 [node name="RayLeft" type="RayCast" parent="."]
 transform = Transform( 0.866025, 0, 0.5, 0, 1, 0, -0.5, 0, 0.866025, 0, 0, 0 )
 enabled = true
-cast_to = Vector3( 0, 0, 5 )
+cast_to = Vector3( 0, 0, 10 )
 collide_with_areas = true
 
 [node name="RayLeftMost" type="RayCast" parent="."]
 transform = Transform( 0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 0, 0, 0 )
 enabled = true
-cast_to = Vector3( 0, 0, 5 )
+cast_to = Vector3( 0, 0, 10 )
 collide_with_areas = true
+
 [connection signal="area_entered" from="." to="." method="_on_GargabeTruck_area_entered"]

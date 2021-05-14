@@ -45,14 +45,26 @@ onready var ray_left_most : RayCast = get_node("RayLeftMost")
 
 
 ## Built-In Virtual Methods
-func _process(delta):
+func _physics_process(delta : float) -> void:
 	if ai:
-		print(
-				ray_front.is_colliding(),
-				ray_right.is_colliding(),
-				ray_right_most.is_colliding(),
-				ray_left.is_colliding(),
-				ray_left_most.is_colliding())
+		var state = ""
+		
+		for ray in [
+					ray_front,
+					ray_right,
+					ray_right_most,
+					ray_left,
+					ray_left_most,
+				]:
+			var ray_state = "null"
+			if ray.is_colliding():
+				var obj = ray.get_collider()
+				ray_state = "(" + str(translation.distance_to(obj.translation)) + "," + str(obj.pointage) + ")"
+			state += ray_state
+		
+		var state_hash = str(hash(state))
+		if not state_hash == "2092730668":
+			print(state_hash + " <= " + state)
 	else:
 		var direction := Vector3.ZERO
 		if Input.is_action_pressed("ui_right") and translation.x < 6:
