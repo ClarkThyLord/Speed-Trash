@@ -34,6 +34,8 @@ var _boosting := false
 
 var _q_table := {}
 
+var _moves := []
+
 
 
 ## OnReady Variables
@@ -50,13 +52,14 @@ func _enter_tree() -> void:
 		if not file.file_exists(Q_TABLE_PATH):
 			return
 		
+		print("Loading q_table.json...")
 		if file.open(Q_TABLE_PATH, File.READ) != 0:
 			print("Error opening file")
 			return
 		
 		var json := JSON.parse(file.get_as_text())
 		if json.error == OK and typeof(json.result) == TYPE_DICTIONARY:
-			print("Loading q_table.json...")
+			print(file.get_path_absolute())
 			_q_table = json.result
 		
 		if file.is_open():
@@ -94,9 +97,9 @@ func _physics_process(delta : float) -> void:
 							+ "," + str(area.pointage) + ")"
 		
 		var moves := [
-			Vector3.ZERO,
-			Vector3(clamp(speed * delta, -6.0, 6.0), 0, 0),
-			Vector3(clamp(-speed * delta, -6.0, 6.0), 0, 0)
+			translation,
+			Vector3(clamp(translation.x + speed * delta, -6.0, 6.0), 0, 0),
+			Vector3(clamp(translation.x + -speed * delta, -6.0, 6.0), 0, 0)
 		]
 		
 		var best_move = -Vector3.INF
@@ -117,7 +120,8 @@ func _physics_process(delta : float) -> void:
 			best_move = moves[randi() % moves.size()]
 			best_move_hash = hash(str(best_move) + state)
 		
-		translate(best_move)
+		translation = best_move
+		_moves.append(best_move_hash)
 	else:
 		var direction := Vector3.ZERO
 		if Input.is_action_pressed("ui_right") and translation.x < 6:
@@ -151,5 +155,15 @@ func is_breaking() -> bool:
 
 ## Private Methods
 func _on_GargabeTruck_area_entered(area : Area):
+	if area.is_in_group("objects"):
+		var decay := 0.03
+		var reward : float = area.pointage if area.pointage > 0.0 else -2
+		for move in _moves:
+			if not _q_table.has(move):
+				_q_table[move] = 0.0
+			
+			_q_table[move] += reward
+			reward -= reward * decay
+	
 	if area.is_in_group("obstacles") and not animation_player.is_playing():
 		animation_player.play("hit")
