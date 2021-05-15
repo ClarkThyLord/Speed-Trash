@@ -3,8 +3,11 @@ extends Area
 
 
 
-## Constants
-const Q_TABLE_PATH := "user://q_table.json"
+## Enums
+enum AIModes {
+	TRAINING,
+	PLAYING
+}
 
 
 
@@ -25,6 +28,8 @@ export(float, 0.0, 100.0) var momentum_growth := 10.0
 
 export var ai := false
 
+export(AIModes) var ai_mode := AIModes.PLAYING
+
 
 
 ## Private Variables
@@ -32,13 +37,13 @@ var _breaking := false
 
 var _boosting := false
 
-var _q_table := {}
-
 var _moves := []
 
 
 
 ## OnReady Variables
+onready var sprite : Sprite3D = get_node("Sprite3D")
+
 onready var animation_player : AnimationPlayer = get_node("AnimationPlayer")
 
 onready var view : Area = get_node("View")
@@ -46,39 +51,8 @@ onready var view : Area = get_node("View")
 
 
 ## Built-In Virtual Methods
-func _enter_tree() -> void:
-	if ai:
-		var file = File.new()
-		if not file.file_exists(Q_TABLE_PATH):
-			return
-		
-		print("Loading q_table.json...")
-		if file.open(Q_TABLE_PATH, File.READ) != 0:
-			print("Error opening file")
-			return
-		
-		var json := JSON.parse(file.get_as_text())
-		if json.error == OK and typeof(json.result) == TYPE_DICTIONARY:
-			print(file.get_path_absolute())
-			_q_table = json.result
-		
-		if file.is_open():
-			file.close()
-
-
-func _exit_tree() -> void:
-	if ai:
-		print('Saving q_table.json...')
-		var file = File.new()
-		if file.open(Q_TABLE_PATH, File.WRITE) != 0:
-			print("Error opening file")
-			return
-		
-		print(file.get_path_absolute())
-		file.store_line(JSON.print(_q_table))
-		
-		if file.is_open():
-			file.close()
+func _ready() -> void:
+	sprite.modulate.a = 0.1 if (ai and ai_mode == AIModes.TRAINING) else 1.0
 
 
 func _physics_process(delta : float) -> void:
@@ -96,6 +70,8 @@ func _physics_process(delta : float) -> void:
 							+ str(area.translation) \
 							+ "," + str(area.pointage) + ")"
 		
+		var q_table := _get_q_table()
+		
 		var moves := [
 			translation,
 			Vector3(clamp(translation.x + speed * delta, -6.0, 6.0), 0, 0),
@@ -108,7 +84,7 @@ func _physics_process(delta : float) -> void:
 		
 		for move in moves:
 			var move_hash := hash(str(move) + state)
-			var move_value : float = _q_table.get(move_hash, -INF)
+			var move_value : float = q_table.get(move_hash, -INF)
 			if move_value > best_move_value:
 				best_move = move
 				best_move_hash = move_hash
@@ -154,15 +130,21 @@ func is_breaking() -> bool:
 
 
 ## Private Methods
+func _get_q_table() -> Dictionary:
+	var session := get_node_or_null("/root/Session")
+	return session.q_table if is_instance_valid(session) else {}
+
+
 func _on_GargabeTruck_area_entered(area : Area):
 	if area.is_in_group("objects"):
 		var decay := 0.03
 		var reward : float = area.pointage
+		var q_table = _get_q_table()
 		for move in _moves:
-			if not _q_table.has(move):
-				_q_table[move] = 0.0
+			if not q_table.has(move):
+				q_table[move] = 0.0
 			
-			_q_table[move] = float(_q_table[move]) + reward
+			q_table[move] = float(q_table[move]) + reward
 			reward -= reward * decay
 	
 	if area.is_in_group("obstacles") and not animation_player.is_playing():
