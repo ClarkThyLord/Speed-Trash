@@ -33,12 +33,15 @@ func set_car_type(value : int) -> void:
 	var car_texture : Texture
 	match value:
 		CarTypes.CAR:
+			pointage = -2
 			speed = 1.0
 			car_texture = preload("res://assets/map/objects/vehicle/car.png")
 		CarTypes.RACE_CAR:
+			pointage = -1
 			speed = 0.65
 			car_texture = preload("res://assets/map/objects/vehicle/race_car.png")
 		CarTypes.BUS:
+			pointage = -4
 			speed = 1.75
 			car_texture = preload("res://assets/map/objects/vehicle/bus.png")
 		_:

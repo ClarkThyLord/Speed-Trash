@@ -157,12 +157,12 @@ func is_breaking() -> bool:
 func _on_GargabeTruck_area_entered(area : Area):
 	if area.is_in_group("objects"):
 		var decay := 0.03
-		var reward : float = area.pointage if area.pointage > 0.0 else -2
+		var reward : float = area.pointage
 		for move in _moves:
 			if not _q_table.has(move):
 				_q_table[move] = 0.0
 			
-			_q_table[move] += reward
+			_q_table[move] = float(_q_table[move]) + reward
 			reward -= reward * decay
 	
 	if area.is_in_group("obstacles") and not animation_player.is_playing():

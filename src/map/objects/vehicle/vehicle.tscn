@@ -9,6 +9,7 @@
 "obstacles",
 ]]
 script = ExtResource( 1 )
+pointage = -2.0
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
 shape = SubResource( 1 )
