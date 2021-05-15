@@ -80,7 +80,7 @@ func _exit_tree() -> void:
 
 func _physics_process(delta : float) -> void:
 	if ai:
-		var state = str(translation)
+		var state = ""
 		
 		var areas := view.get_overlapping_areas()
 		if areas.size() > 1:
@@ -93,8 +93,31 @@ func _physics_process(delta : float) -> void:
 							+ str(area.translation) \
 							+ "," + str(area.pointage) + ")"
 		
-		var state_hash = str(hash(state))
-		print(state_hash + " <= " + state)
+		var moves := [
+			Vector3.ZERO,
+			Vector3(clamp(speed * delta, -6.0, 6.0), 0, 0),
+			Vector3(clamp(-speed * delta, -6.0, 6.0), 0, 0)
+		]
+		
+		var best_move = -Vector3.INF
+		var best_move_hash
+		var best_move_value = -INF
+		
+		for move in moves:
+			var move_hash := hash(str(move) + state)
+			var move_value : float = _q_table.get(move_hash, -INF)
+			if move_value > best_move_value:
+				best_move = move
+				best_move_hash = move_hash
+				best_move_value = move_value
+		
+		var exploration_rate := 0.2
+		if best_move == -Vector3.INF or \
+				randf() <= exploration_rate:
+			best_move = moves[randi() % moves.size()]
+			best_move_hash = hash(str(best_move) + state)
+		
+		translate(best_move)
 	else:
 		var direction := Vector3.ZERO
 		if Input.is_action_pressed("ui_right") and translation.x < 6:
