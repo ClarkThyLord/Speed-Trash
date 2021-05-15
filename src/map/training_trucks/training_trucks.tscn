@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/garbage_truck/garbage_truck.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/map/training_trucks/training_trucks.gd" type="Script" id=2]
+
+[node name="TrainingTrucks" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="GargabeTruck" parent="." instance=ExtResource( 1 )]
+ai = true
+ai_mode = 0

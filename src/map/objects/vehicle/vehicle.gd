@@ -57,4 +57,5 @@ func random() -> void:
 
 
 func player_entered(player) -> void:
-	get_node("/root/Session").points = 0
+	if not player.ai or player.ai_mode == player.AIModes.PLAYING:
+		get_node("/root/Session").points = 0

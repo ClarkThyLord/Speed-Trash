@@ -66,4 +66,5 @@ func random() -> void:
 
 
 func player_entered(player) -> void:
-	.player_entered(player)
+	if not player.ai or player.ai_mode == player.AIModes.PLAYING:
+		.player_entered(player)
