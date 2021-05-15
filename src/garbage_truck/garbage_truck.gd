@@ -32,15 +32,7 @@ var _boosting := false
 ## OnReady Variables
 onready var animation_player : AnimationPlayer = get_node("AnimationPlayer")
 
-onready var ray_front : RayCast = get_node("RayFront")
-
-onready var ray_right : RayCast = get_node("RayRight")
-
-onready var ray_right_most : RayCast = get_node("RayRightMost")
-
-onready var ray_left : RayCast = get_node("RayLeft")
-
-onready var ray_left_most : RayCast = get_node("RayLeftMost")
+onready var view : Area = get_node("View")
 
 
 
@@ -48,22 +40,18 @@ onready var ray_left_most : RayCast = get_node("RayLeftMost")
 func _physics_process(delta : float) -> void:
 	if ai:
 		var state = ""
-		
-		for ray in [
-					ray_front,
-					ray_right,
-					ray_right_most,
-					ray_left,
-					ray_left_most,
-				]:
-			var ray_state = "null"
-			if ray.is_colliding():
-				var obj = ray.get_collider()
-				ray_state = "(" + str(translation.distance_to(obj.translation)) + "," + str(obj.pointage) + ")"
-			state += ray_state
-		
-		var state_hash = str(hash(state))
-		if not state_hash == "2092730668":
+		var areas := view.get_overlapping_areas()
+		if areas.size() > 1:
+			for area in areas:
+				if area == self:
+					continue
+				
+				if area.translation.z < 0.0:
+					state += "(" \
+							+ str(area.translation) \
+							+ "," + str(area.pointage) + ")"
+			
+			var state_hash = str(hash(state))
 			print(state_hash + " <= " + state)
 	else:
 		var direction := Vector3.ZERO
