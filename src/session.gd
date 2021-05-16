@@ -4,24 +4,64 @@ extends Node
 
 
 ## Constants
-const Q_TABLE_PATH := "user://q_table.json"
+const Q_TABLE_DIR := "res://q_tables"
+
+const Q_TABLE_PATH := Q_TABLE_DIR + "/q_table.json"
 
 
 
 ## Public Variables
 var points := 0
 
+
+
+## Private Variables
 var q_table := {}
 
 
+
+## OnReady Variables
+var q_timer := Timer.new()
+
+
+
 ## Built-In Virtual Methods
+func _ready() -> void:
+	q_timer.connect("timeout", self, "_on_q_timer_timeout")
+	add_child(q_timer)
+	q_timer.start(60)
+
+
 func _enter_tree() -> void:
+	load_q_table()
+
+func _exit_tree() -> void:
+	save_q_table()
+
+
+
+## Public Methods
+func save_q_table(path := Q_TABLE_PATH) -> void:
+	print('Saving q_table.json...')
 	var file = File.new()
-	if not file.file_exists(Q_TABLE_PATH):
+	if file.open(path, File.WRITE) != 0:
+		print("Error opening file")
+		return
+	
+	print(file.get_path_absolute())
+	file.store_line(JSON.print(q_table))
+	
+	if file.is_open():
+		file.close()
+
+
+func load_q_table(path := Q_TABLE_PATH) -> void:
+	var file = File.new()
+	if not file.file_exists(path):
 		return
 	
 	print("Loading q_table.json...")
-	if file.open(Q_TABLE_PATH, File.READ) != 0:
+	if file.open(path, File.READ) != 0:
 		print("Error opening file")
 		return
 	
@@ -34,15 +74,13 @@ func _enter_tree() -> void:
 		file.close()
 
 
-func _exit_tree() -> void:
-	print('Saving q_table.json...')
-	var file = File.new()
-	if file.open(Q_TABLE_PATH, File.WRITE) != 0:
-		print("Error opening file")
-		return
-	
-	print(file.get_path_absolute())
-	file.store_line(JSON.print(q_table))
-	
-	if file.is_open():
-		file.close()
+
+## Private Methods
+func _on_q_timer_timeout() -> void:
+	var datetime := OS.get_datetime()
+			+ str(datetime["hour"]) + "-" \
+			+ str(datetime["minute"]) + "@" \
+			+ str(datetime["day"]) + "-" \
+			+ str(datetime["month"]) + "-" \
+			+ str(datetime["year"]) \
+			+ ".backup.json")
