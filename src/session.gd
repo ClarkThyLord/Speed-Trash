@@ -78,6 +78,7 @@ func load_q_table(path := Q_TABLE_PATH) -> void:
 ## Private Methods
 func _on_q_timer_timeout() -> void:
 	var datetime := OS.get_datetime()
+	save_q_table(Q_TABLE_DIR + "/" \
 			+ str(datetime["hour"]) + "-" \
 			+ str(datetime["minute"]) + "@" \
 			+ str(datetime["day"]) + "-" \
