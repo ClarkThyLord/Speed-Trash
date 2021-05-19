@@ -146,6 +146,7 @@ func _on_GargabeTruck_area_entered(area : Area):
 			
 			q_table[move] = float(q_table[move]) + reward
 			reward -= reward * decay
+		_moves.clear()
 	
 	if area.is_in_group("obstacles") and not animation_player.is_playing():
 		animation_player.play("hit")
