@@ -67,7 +67,7 @@ func _physics_process(delta : float) -> void:
 				
 				if area.translation.z < 0.0:
 					state += "(" \
-							+ str(area.translation.round()) \
+							+ str(round(area.translation.x)) \
 							+ "," + str(area.pointage) + ")"
 		
 		var q_table := _get_q_table()
