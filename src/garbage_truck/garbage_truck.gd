@@ -57,7 +57,7 @@ func _ready() -> void:
 
 func _physics_process(delta : float) -> void:
 	if ai:
-		var state = ""
+		var state = " "
 		
 		var areas := view.get_overlapping_areas()
 		if areas.size() > 1:
@@ -73,17 +73,19 @@ func _physics_process(delta : float) -> void:
 		var q_table := _get_q_table()
 		
 		var moves := [
-			translation,
-			Vector3(clamp(translation.x + speed * delta, -6.0, 6.0), 0, 0),
-			Vector3(clamp(translation.x + -speed * delta, -6.0, 6.0), 0, 0)
+			translation.x,
+			clamp(translation.x + speed * delta, -6.0, 6.0),
+			clamp(translation.x + -speed * delta, -6.0, 6.0),
 		]
 		
-		var best_move = -Vector3.INF
+		var best_move = -INF
 		var best_move_hash
 		var best_move_value = -INF
 		
 		for move in moves:
-			var move_hash := hash(str(move) + state)
+			var move_state = str(move) + state
+			print(move_state)
+			var move_hash := hash(move_state)
 			var move_value : float = q_table.get(move_hash, -INF)
 			if move_value > best_move_value:
 				best_move = move
@@ -91,12 +93,12 @@ func _physics_process(delta : float) -> void:
 				best_move_value = move_value
 		
 		var exploration_rate := 0.2
-		if best_move == -Vector3.INF or \
+		if best_move == -INF or \
 				randf() <= exploration_rate:
 			best_move = moves[randi() % moves.size()]
 			best_move_hash = hash(str(best_move) + state)
 		
-		translation = best_move
+		translation.x = best_move
 		_moves.append(best_move_hash)
 	else:
 		var direction := Vector3.ZERO
