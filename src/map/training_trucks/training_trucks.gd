@@ -4,7 +4,7 @@ extends Spatial
 
 
 ## Exported Variables
-export(int, 1, 100) var trucks := 10
+export(int, 0, 100) var trucks := 10
 
 
 

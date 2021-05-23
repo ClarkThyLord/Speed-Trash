@@ -78,26 +78,28 @@ func _physics_process(delta : float) -> void:
 			clamp(translation.x + speed * delta, -6.0, 6.0),
 			clamp(translation.x + -speed * delta, -6.0, 6.0),
 		]
+		for i in range(moves.size()):
+			moves[i] = stepify(moves[i], 0.01)
 		
 		var best_move = -INF
 		var best_move_hash
-		var best_move_value = -INF
 		
+		var best_move_value = -INF
 		for move in moves:
-			move = stepify(move, 0.01)
 			var move_state = str(move) + state
 			var move_hash := hash(move_state)
 			var move_value : float = q_table.get(move_hash, -INF)
 			if move_value > best_move_value:
 				best_move = move
-				best_move_hash = move_hash
 				best_move_value = move_value
 		
 		var exploration_rate := 0.2
 		if best_move == -INF or \
 				randf() <= exploration_rate:
 			best_move = moves[randi() % moves.size()]
-			best_move_hash = hash(str(best_move) + state)
+		
+		var best_move_state = str(best_move) + state
+		best_move_hash = hash(best_move_state)
 		
 		translation.x = best_move
 		_moves.append(best_move_hash)
