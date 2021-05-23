@@ -67,7 +67,8 @@ func _physics_process(delta : float) -> void:
 				
 				if area.translation.z < 0.0:
 					state += "(" \
-							+ str(round(area.translation.x)) \
+							+ str(stepify(area.translation.x, 0.01)) \
+							+ "," + str(stepify(area.translation.z, 0.01)) \
 							+ "," + str(area.pointage) + ")"
 		
 		var q_table := _get_q_table()
@@ -83,8 +84,8 @@ func _physics_process(delta : float) -> void:
 		var best_move_value = -INF
 		
 		for move in moves:
+			move = stepify(move, 0.01)
 			var move_state = str(move) + state
-			print(move_state)
 			var move_hash := hash(move_state)
 			var move_value : float = q_table.get(move_hash, -INF)
 			if move_value > best_move_value:
