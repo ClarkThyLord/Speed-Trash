@@ -11,7 +11,7 @@ const Q_TABLE_PATH := Q_TABLE_DIR + "/q_table.json"
 
 
 ## Public Variables
-var points := 0
+var points := 0 setget set_points
 
 
 
@@ -41,6 +41,17 @@ func _exit_tree() -> void:
 
 
 ## Public Methods
+func set_points(value : int) -> void:
+	if value <= 0:
+		var datetime := OS.get_datetime()
+		print(str(get_node("/root/Session").points) + " at " \
+			+ str(datetime["hour"]) + ":" \
+			+ str(datetime["minute"]) + ":" \
+			+ str(datetime["second"]))
+	
+	points = value
+
+
 func save_q_table(path := Q_TABLE_PATH) -> void:
 	print('Saving q_table.json...')
 	var file = File.new()
