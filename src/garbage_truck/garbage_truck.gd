@@ -144,6 +144,14 @@ func _on_GargabeTruck_area_entered(area : Area):
 	if area.is_in_group("objects"):
 		var decay := 0.03
 		var reward : float = area.pointage
+		
+		if ai and ai_mode == AIModes.PLAYING and reward > 0:
+			var datetime := OS.get_datetime()
+			print(str(reward) + " at " \
+				+ str(datetime["hour"]) + ":" \
+				+ str(datetime["minute"]) + ":" \
+				+ str(datetime["second"]))
+		
 		var q_table = _get_q_table()
 		for move in _moves:
 			if not q_table.has(move):
